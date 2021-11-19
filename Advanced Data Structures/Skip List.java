@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.util.Random;
 
 class Node{
@@ -76,30 +75,30 @@ public class SkipList {
     }
 
     public Node remove(int key){
-        Node rem = skipSearch(key);
-        if (rem.key!=key){
+        Node removeNode = skipSearch(key);
+        if (removeNode.key!=key){
             System.out.println("Node with key "+key+" is not found");
             return null;
         }
-        removeRef(rem);
+        removeReferences(removeNode);
 
-        while (rem!=null){
-            removeRef(rem);
-            if (rem.above==null){
-                rem=rem.above;
+        while (removeNode!=null){
+            removeReferences(removeNode);
+            if (removeNode.above==null){
+                removeNode=removeNode.above;
             }else {
                 break;
             }
         }
-        return rem;
+        return removeNode;
     }
 
-    private void removeRef(Node rem){
-        Node afterRem = rem.nxt;
-        Node befRem = rem.prev;
+    private void removeReferences(Node removedNode){
+        Node afterRemoved = removedNode.nxt;
+        Node befRemoved = removedNode.prev;
 
-        befRem.nxt=afterRem;
-        afterRem.prev=befRem;
+        befRemoved.nxt=afterRemoved;
+        afterRemoved.prev=befRemoved;
 
     }
 
